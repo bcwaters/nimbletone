@@ -10,7 +10,7 @@ app.use(bodyParser.json());
 
 app.post('/text',(req, res) => {
   
-    fs.appendFile('text.log','</br>---- start msg ---- </br></br>' + req.body.phone_number + ': ' + req.body.text + '</br>raw data:   ' +  JSON.stringify(req.body) + '</br></br>------- end msg -----</br>', function (err) {
+    fs.appendFile('text.log','</br>---- start msg ---- </br></br>' + req.body.data.payload.from.phone_number + ': ' + req.body.data.payload.text + '</br>raw data:   ' +  JSON.stringify(req.body) + '</br></br>------- end msg -----</br>', function (err) {
         if (err) throw err;
         
         
