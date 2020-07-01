@@ -4,43 +4,45 @@ const app = express();
 const fs = require('fs');
 const request = require('request')
 const http = require('http')
-const sentTexts = []
+require('dotenv').config()
+
+const textMessages = []
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+
+//webhook for telnyx
 app.post('/text',(req, res) => {
 
-    fs.appendFile('text.log','</br>---- start msg ---- </br></br>' + req.body.data.payload.from.phone_number + ': ' + req.body.data.payload.text  + '</br></br>------- end msg -----</br>', function (err) {
-        if (err) throw err;
-        
-        
+    //log everthing
+    console.log(JSON.stringify(req.body))
+    fs.appendFile('text.log','\n\n' + JSON.stringify(req.body), function (err) {
+        if (err) throw err;  
     });
     
-    
-    if(req.body.data.event_type == "message.received"){
-        sentTexts.unshift('</br>---- start msg ---- </br></br>received from:' + req.body.data.payload.from.phone_number + ': ' + req.body.data.payload.text  + '</br></br>------- end msg -----</br>')
+    //if a message is successfully sent/recieved add it to the global array
+    if((req.body.data.event_type == "message.received")  || (req.body.data.event_type == "message.sent") ){
+        textMessages.unshift('</br>---- start msg ---- </br></br>'+ req.body.data.event_type+ ':' + req.body.data.payload.from.phone_number + ': ' + req.body.data.payload.text  + '</br></br>------- end msg -----</br>')
     }
     
-  res.end(JSON.stringify(req.body));
+   res.end(JSON.stringify(req.body));
 });
 
 
-app.get('/send/:msg/:number',(req, res) => {
-  
+//TODO fix this to be /send/:number?msg=MSGHERE
+app.get('/send/:number',(req, res) => {
     
-     
-    console.log('received post call')
-    sentTexts.unshift('</br>---- start msg ---- </br></br>sent to:' +  req.params.number + ': '  +  req.params.msg + '</br></br>------- end msg -----</br>')
-    console.log('\n\n\n\n\n' + sentTexts.toString())
     
-    let data = {
-    "from": "+19288888420",
-    "to": "+1" +  req.params.number,
-    "text": req.params.msg
-
-};
+    
+    console.log('\nText Message request received: ' + req.params.number +": " +req.query.msg)
+    
+    var data = {
+        "from": "+19288888420",
+        "to": "+1" +  req.params.number,
+        "text": req.params.msg
+    };
     
     var options = {
     url : "https://api.telnyx.com/v2/messages",
@@ -48,25 +50,24 @@ app.get('/send/:msg/:number',(req, res) => {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer KEY0173051EE690BA4A61DF4313A6BB7F78_kiDSZoZWfQdilVG18bk40R',
+        'Authorization': 'Bearer ' + process.env.API_KEY,
         'Content-Length': data.length
-    }
-};
-  var callback = (error, response, body) => {
-  console.log(body);
-  console.log(response.statusCode);
-}
-
-request(options, callback);
+        }
+    };
     
-   res.send(req.params)
+    var requestCallback = (error, response, body) => {
+        console.log("Message status code:" + response.statusCode);
+    }
+
+    request(options, requestCallback);
+    
+    res.send(req.params)
 });
 
 
 app.use(function(req, res){
    // fs.readFile("text.log", "utf8", function(err, data) {  res.send(data); if(err) res.send('error')});
-
-     res.send(sentTexts.toString())
+     res.send(textMessages.toString())
  });
 
 app.listen(3000,() => {
@@ -74,13 +75,3 @@ app.listen(3000,() => {
 })
 
 
-
-/*
-$ curl -X POST   --header "Content-Type: application/json"   --header "Authorization: Bearer KEY"   --data '{
-    "from": "+number",
-    "to": "+number",
-    "text": "Hi Mitch this is Brent"
-  }'   https://api.telnyx.com/v2/messages^C
-
-
-*/

@@ -1,3 +1,10 @@
-This project is used to send/recieve a text from an SMS service named Telnyx
+# NimbleTone
+[NimbleTone.com](http://www.NimbleTone.com)
 
-KEY0173051EE690BA4A61DF4313A6BB7F78_kiDSZoZWfQdilVG18bk40R
+Send and Recieve sms text messages online
+
+## Stack
+Backend - Node server running express that also acts as a WebHook for a Telenyx account
+
+Frontend - React 
+
