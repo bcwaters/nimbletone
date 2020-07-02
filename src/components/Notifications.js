@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import TextEntryArea from './TextEntryArea.js'
 import {Container, Row, Col} from 'reactstrap'
 
-class Phone extends Component {
+class Notifications extends Component {
 
     constructor() {
         super();
@@ -22,17 +22,21 @@ class Phone extends Component {
 
         return (
             <div className="react">
-             ↓ Phone component↓
+           
                 <Container>
                 <div style={divStyle}> 
                     <Row>
-               <div style={{height: '300px',     border: 'solid',     width: '400px'}}> 
-                        Maybe dialpad goes here?
-                </div>
+                        <div style={{height: '100px',     border: 'solid',     width: '400px'}}> 
+                      
+                        </div>
                     </Row>
                     <Row>
-                        <TextEntryArea />  
+             
                     </Row>
+                    <Row>
+                  
+                    </Row>
+            
                  </div>
                 </Container>
             </div>
@@ -41,4 +45,4 @@ class Phone extends Component {
 }
 
 
-export default Phone;
+export default Notifications;

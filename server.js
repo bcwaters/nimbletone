@@ -7,7 +7,9 @@ const http = require('http')
 const path = require('path')
 require('dotenv').config()
 
-const textMessages = ['2nd Message', '1st Message']
+//TODO replace the in memory solution with a database call
+const textMessages = [ {timestamp: '12:00 7-29-20', number: '6504768039', msg:'1st Message'}, {timestamp: '12:00 7-30-20', number: '9288888420', msg:'2nd Message response'},
+                     {timestamp: '12:00 7-29-20', number: '6504768039', msg:'sender 2nd message'}]
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -29,8 +31,32 @@ app.post('/text',(req, res) => {
     });
     
     //if a message is successfully sent/recieved add it to the global array
-    if((req.body.data.event_type == "message.received")  || (req.body.data.event_type == "message.sent") ){
-        textMessages.unshift( req.body.data.event_type+ ':' + req.body.data.payload.from.phone_number + ': ' + req.body.data.payload.text )
+    //TODO This should be an array of JSONS with number, eventtype, msg, timestamp
+    if((req.body.data.event_type == "message.received") ) {
+        textMessages.push( {
+                                eventType: 'received',
+                                timestamp: req.body.data.occurred_at, 
+                                number: req.body.data.payload.from.phone_number , 
+                                msg: req.body.data.payload.text
+                              }
+                            )
+        
+        
+        
+        console.log("text added to array:" + req.body.data.payload.text)
+    }
+    
+    if( (req.body.data.event_type == "message.sent")){
+        
+                textMessages.push( {
+                                eventType: 'sent',
+                                timestamp: req.body.data.occurred_at, 
+                                number: req.body.data.payload.to[0].phone_number , 
+                                msg: req.body.data.payload.text
+                              }
+                            )
+        
+        
         console.log("text added to array:" + req.body.data.payload.text)
     }
     
