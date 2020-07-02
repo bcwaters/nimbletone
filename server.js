@@ -4,13 +4,19 @@ const app = express();
 const fs = require('fs');
 const request = require('request')
 const http = require('http')
+const path = require('path')
 require('dotenv').config()
 
-const textMessages = []
+const textMessages = ['hello']
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+app.use(
+ express.static(path.join(__dirname, './dist'))
+)
+
 
 
 //webhook for telnyx
@@ -31,7 +37,7 @@ app.post('/text',(req, res) => {
 });
 
 
-//TODO fix this to be /send/:number?msg=MSGHERE
+//get request made from react app that is then posted to telnyx to complete
 app.get('/send/:number',(req, res) => {
     
     
@@ -41,7 +47,7 @@ app.get('/send/:number',(req, res) => {
     var data = {
         "from": "+19288888420",
         "to": "+1" +  req.params.number,
-        "text": req.params.msg
+        "text": req.query.msg
     };
     
     var options = {
@@ -64,10 +70,15 @@ app.get('/send/:number',(req, res) => {
     res.send(req.params)
 });
 
+app.get('/v1/messages',function(req, res){
+ 
+    res.json(textMessages)
+ });
 
-app.use(function(req, res){
+
+app.get('/',function(req, res){
    // fs.readFile("text.log", "utf8", function(err, data) {  res.send(data); if(err) res.send('error')});
-     res.send(textMessages.toString())
+               res.sendFile('index.html', {root: path.resolve(__dirname, './dist')});
  });
 
 app.listen(3000,() => {
