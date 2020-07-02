@@ -7,7 +7,7 @@ const http = require('http')
 const path = require('path')
 require('dotenv').config()
 
-const textMessages = ['hello']
+const textMessages = ['2nd Message', '1st Message']
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -30,7 +30,8 @@ app.post('/text',(req, res) => {
     
     //if a message is successfully sent/recieved add it to the global array
     if((req.body.data.event_type == "message.received")  || (req.body.data.event_type == "message.sent") ){
-        textMessages.unshift('</br>---- start msg ---- </br></br>'+ req.body.data.event_type+ ':' + req.body.data.payload.from.phone_number + ': ' + req.body.data.payload.text  + '</br></br>------- end msg -----</br>')
+        textMessages.unshift( req.body.data.event_type+ ':' + req.body.data.payload.from.phone_number + ': ' + req.body.data.payload.text )
+        console.log("text added to array:" + req.body.data.payload.text)
     }
     
    res.end(JSON.stringify(req.body));

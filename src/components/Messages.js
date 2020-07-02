@@ -6,13 +6,11 @@ class Messages extends Component {
     constructor() {
         super();
         this.state = {
-            name: 'React'
+            name: 'React',
+            messages: []
         };
     }
     
-    
-    
-  
   componentDidMount() {
     fetch("/v1/messages")
       .then(res => res.json())
@@ -36,17 +34,26 @@ class Messages extends Component {
   }
     
 
-
-
     render() {
+        var divStyle = {
+            border: 'solid',
+            padding: '20px'
+           
+        }
+        
         return (
             <div className="react">
           
-          {JSON.stringify(this.state.messages)}
+            {this.state.messages.map(msg => 
+                (
+                    <div style={divStyle}> {msg} <br/></div>
+                )
+            )}
 
             </div>
         );
     }
+    
 }
 
 
