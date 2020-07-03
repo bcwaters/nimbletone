@@ -1,15 +1,21 @@
 import React, {Component} from 'react';
-import TextEntryArea from './TextEntryArea.js'
+import TextEntryArea from './TextEntryArea.jsx'
 import {Container, Row, Col} from 'reactstrap'
 
 class Notifications extends Component {
 
-    constructor() {
-        super();
+  
+    constructor(props) {
+        super(props);
         this.state = {
-            name: 'React'
+            name: 'React',
         };
     }
+    
+  componentDidMount() {
+
+      
+  }
     
 
     render() {
@@ -24,18 +30,18 @@ class Notifications extends Component {
             <div className="react">
            
                 <Container>
+                    
                 <div style={divStyle}> 
-                    <Row>
-                        <div style={{height: '100px',     border: 'solid',     width: '400px'}}> 
-                      
+                    {this.props.messages.map((msgGroup,messageLocation) => ( 
+                        <Row>
+                        <div onClick={()=>{this.props.setSelectedContact(messageLocation)}} style={{height: '100px',     border: 'solid',     width: '400px'}}> 
+                            Contact: {msgGroup[0].number}
                         </div>
-                    </Row>
-                    <Row>
-             
-                    </Row>
-                    <Row>
-                  
-                    </Row>
+                        </Row>
+                     )
+                    )}
+                   
+        
             
                  </div>
                 </Container>

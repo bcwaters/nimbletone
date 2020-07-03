@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Container, Row, Col} from 'reactstrap'
+import {Container, Row, Col, Button,Input} from 'reactstrap'
 
 
 class TextEntryArea extends Component {
@@ -16,25 +16,28 @@ class TextEntryArea extends Component {
             var divStyle = {
         border: 'solid',
         height: '150px',
-        minWidth: '300px'
+        minWidth: '300px',
+        margin: '5px'
     };
 
         return (
              <div className="react">
                <Container>
                <Row fluid>
-                <Col xs={12}>
+                <Col xs={11}>
                     <div style={divStyle}>
                         ↓ TextEntryArea Component ↓
+                  <Input type="textarea" name="text" id="exampleText" />
                     </div>
                 </Col>
-               </Row>
-                <Row>
-                    <Col xs={9}/>
-                    <Col xs={3} >
-                        <div style={{border:'solid', height:'50px', margin: '10px'}}>
-                            Put a send button component here?
-                        </div>
+           
+        
+                    <Col xs={1} >
+                    <Row><br/><br/><br/><br/><br/></Row>     
+      
+                    <Row>
+                        <Button color="primary" size="sm">Send</Button>
+                    </Row>
                     </Col>
                 </Row>
              </Container>
