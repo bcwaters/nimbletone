@@ -4,7 +4,9 @@
 Send and Recieve sms text messages online
 
 ## Stack
-Backend - Node server running express that also acts as a WebHook for a Telenyx account
+Backend - Node server to interface with Telnyx api, Mysql DB, and act as api for React frontend
 
-Frontend - React 
+Frontend - React with reactstrap
+
+Database - Mysql in AWS
 

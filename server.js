@@ -10,11 +10,6 @@ require('dotenv').config()
 //TODO replace the in memory solution with a database call
 //DB call will return an Array of Jsons sorted by the number which most recently recieved a text using the phonenumber as the uniquekey
 
-
-
-
-
-
 var mysql = require('mysql');
 
 var con = mysql.createConnection({
@@ -23,11 +18,6 @@ var con = mysql.createConnection({
   password: process.env.DB_PASSWORD
 });
 
-
-
-
-
-
     con.connect(function(err) {
   if (err) throw err;
   console.log("Connected!");
@@ -35,16 +25,7 @@ var con = mysql.createConnection({
 });
 
 
-
-
-
 //TODO move all db code to a DBUTILS file to simplify code navigation
-
-
-
-
-
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -90,35 +71,27 @@ app.post('/text',(req, res) => {
   
         
         insertIntoTable(
-            {
+                    {
                         eventType: 'received',
                         timestamp: req.body.data.occurred_at, 
                         number: req.body.data.payload.from.phone_number?req.body.data.payload.from.phone_number:123456789 , 
                         msg: req.body.data.payload.text
                     }
-        )
+                )
         
-        console.log("text added to array:" + req.body.data.payload.text)
     }
     
     if( (req.body.data.event_type == "message.sent")){
         
-    
-           
         insertIntoTable(
-       {
+                            {
                                 eventType: 'sent',
                                 timestamp: req.body.data.occurred_at, 
                                 number: req.body.data.payload.to[0].phone_number?req.body.data.payload.to[0].phone_number:123456789 , 
                                 msg: req.body.data.payload.text
-                              }
+                            }
         )
- 
-        
-        
-        console.log("text added to array:" + req.body.data.payload.text)
     }
-    
    res.end(JSON.stringify(req.body));
 });
 
@@ -160,23 +133,21 @@ app.get('/send/:number',(req, res) => {
 
 app.get('/v1/messages',function(req, res){
  
-
-    
+    //TODO this to DB UTILS
     let sql = `SELECT * FROM mydb.messages`;
-con.query(sql, (error, results, fields) => {
-  if (error) {
-    return console.error(error.message);
-  }
+    con.query(sql, (error, results, fields) => {
+        if (error) {
+            return console.error(error.message);
+            }
         var messages = results.map((msg) => (
             {timestamp: msg.timestamp, number: msg.contact, msg:msg.msg, eventType: msg.event_type}))
         
-        //TODO !This algorhythm assumes that the data is sorted by contact
-        var organizedResult = [[messages[0]]];
+        //TODO !This algorhythm assumes that the data is sorted by contact MOVE TO HELPER FUNCTION
+        var organizedResult = [];
         var uniqueContactIndex = 0;
-        for(var i = 1; i < messages.length; i++){
-            if(messages[i-1].number == messages[i].number){
-                organizedResult[uniqueContactIndex].push(messages[i])
-            }else{
+        for(var i = 0; i < messages.length; i++){
+            
+                //See if the number has already been found and add it to the existing array
                 var added = false
                 for(var j = 0; j<organizedResult.length; j++){
                     if(organizedResult[j][0].number == messages[i].number){
@@ -185,18 +156,18 @@ con.query(sql, (error, results, fields) => {
                             added = true;
                     }
                 }
+                //no msg add therefor we add a new entry for this array
                 if(!added){
+                              console.log('c'+ messages[i].number)
                     uniqueContactIndex++
                     organizedResult.push([messages[i]])
+                    added = true;
                 }
-            }
         }
         
-        console.log(organizedResult)
         res.json(organizedResult)
-});
-
-    
+        }); //END DB QUERY/MAPPING need to be simplified TODO
+ 
  });
 
 
