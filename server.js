@@ -9,11 +9,7 @@ require('dotenv').config()
 
 //TODO replace the in memory solution with a database call
 //DB call will return an Array of Jsons sorted by the number which most recently recieved a text using the phonenumber as the uniquekey
-const textMessages = [[ 
-    {timestamp: '12:00 7-29-20', number: '6504768039', msg:'Sample 1st Message', eventType: 'received'}, 
-    {timestamp: '12:00 7-30-20', number: '6504768039', msg:'Sample 2nd Message response', eventType: 'sent'},
-    {timestamp: '12:00 7-29-20', number: '6504768039', msg:'Sample sender 2nd message', eventType: 'received'}
-    ]]
+
 
 
 
@@ -56,21 +52,7 @@ app.use(
  express.static(path.join(__dirname, './dist'))
 )
 
-function addNewGroup(groupArray){
-    textMessages.push(groupArray);
-}
 
-function addToGroup(msg){
-    var noGroupFound=true;
-    for(var i=0; i<textMessages.length; i++){
-        if(textMessages[i][0].number == msg.number){
-            textMessages[i].push(msg);
-            noGroupFound=false;
-            i = textMessages.length;
-        }
-    }
-    if(noGroupFound){addNewGroup([msg])}
-}
 
 function insertIntoTable(eventJson){
       var sql = "INSERT INTO mydb.messages (contact, identity, msg, event_type, timestamp) VALUES ('"+eventJson.number+"','+19288888420','"+eventJson.msg+"','"+eventJson.eventType+"','"+eventJson.timestamp+"');";
@@ -105,12 +87,7 @@ app.post('/text',(req, res) => {
     //if a message is successfully sent/recieved add it to the global array
     //TODO This should be an array of JSONS with number, eventtype, msg, timestamp
     if((req.body.data.event_type == "message.received") ) {
-        addToGroup({
-                        eventType: 'received',
-                        timestamp: req.body.data.occurred_at, 
-                        number: req.body.data.payload.from.phone_number?req.body.data.payload.from.phone_number:123456789 , 
-                        msg: req.body.data.payload.text
-                    })
+  
         
         insertIntoTable(
             {
@@ -126,13 +103,7 @@ app.post('/text',(req, res) => {
     
     if( (req.body.data.event_type == "message.sent")){
         
-                  addToGroup( {
-                                eventType: 'sent',
-                                timestamp: req.body.data.occurred_at, 
-                                number: req.body.data.payload.to[0].phone_number?req.body.data.payload.to[0].phone_number:123456789 , 
-                                msg: req.body.data.payload.text
-                              }
-                            )
+    
            
         insertIntoTable(
        {
@@ -216,7 +187,6 @@ con.query(sql, (error, results, fields) => {
 });
 
     
-    //res.json(textMessages)
  });
 
 
