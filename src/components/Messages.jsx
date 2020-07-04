@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Container, Row, Col} from 'reactstrap'
 import TextEntryArea from './TextEntryArea.jsx'
 
-
+//TODO rename to conversation
 class Messages extends Component {
 
     constructor(props) {
@@ -18,9 +18,7 @@ class Messages extends Component {
 
       
   }
-    componentWillReceiveProps({someProp}) {
-  this.setState({...this.state,someProp})
-}
+
 
     render() {
         var receivedStyle = {
@@ -46,12 +44,11 @@ class Messages extends Component {
             <div style={{border: 'solid',   padding: '20px'}}>
             <Row> 
                 <Col xs={4}>      
-                <div style={{border: 'solid',   padding: '20px', background: '#ffcbc1'}}>{this.props.messages[this.props.selectedContact][0].number}</div>
+                    <div style={{border: 'solid',   padding: '20px', background: '#ffcbc1'}}>{this.props.messages[this.props.selectedContact][0].number}</div>
                 </Col>
-                        <Col xs={4}>  
-                        </Col>
+                <Col xs={4}>  </Col>
                 <Col xs={4}>     
-                <div style={{border: 'solid',   padding: '20px', background: '#ccaa00'}}>Text a new number</div>
+                    <div style={{border: 'solid',   padding: '20px', background: '#ccaa00'}}>Text a new number</div>
                 </Col>
             </Row>
            <div style={{border: 'solid',   padding: '20px'}}>
@@ -59,7 +56,7 @@ class Messages extends Component {
             {this.props.messages[this.props.selectedContact].map(msg => 
                 (   
                     <Row>
-                     {msg.eventType == 'sent'?<Col xs={3} > ------You--- </Col>:' '}
+                     {msg.eventType == 'sent'?<Col xs={3}> -----You--- </Col>:' '}
                         <Col xs={9}>
                         <div style={msg.eventType == 'sent'?sentStyle:receivedStyle} > {msg.msg} <br/></div>
                         </Col>

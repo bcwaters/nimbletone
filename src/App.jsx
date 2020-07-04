@@ -10,10 +10,10 @@ class App extends Component{
   
       constructor(props) {
         super(props);
-            console.log("set data")
+
         this.state = {
             name: 'React',
-            messages: [[   {timestamp: '12:00 7-29-20', number: '6504768039', msg:'1st Message', type: 'received'}]],
+            messages: [[   {timestamp: '12:00 7-29-20', number: '6504768039', msg:'1st Message', eventType: 'received'}]],
             currentMessage: 0
         };
             this.setSelectedContact = this.setSelectedContact.bind(this)
@@ -29,12 +29,14 @@ class App extends Component{
       .then(res => res.json())
       .then(
         (result) => {
-            console.log("fetched memory data")
+            console.log("fetched success")
+            console.log(result)
           this.setState({
             isLoaded: true,
             messages: result
             
           });
+            
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
@@ -57,9 +59,13 @@ class App extends Component{
                             
 <Container fluid>
   <Row>
-
-            <Col xs={3}> ↓ Notifications component↓ <br/> <Notifications setSelectedContact={this.setSelectedContact} messages={this.state.messages}/></Col>
-    <Col xs={6}>   ↓ Messages component↓ <br/> <Messages selectedContact={this.state.currentMessage} messages={this.state.messages}/></Col>
+        <Col xs={3}> ↓ Notifications component↓ <br/> 
+          <Notifications setSelectedContact={this.setSelectedContact} messages={this.state.messages}/>
+        </Col>
+        <Col xs={6}>   ↓ Messages component↓ <br/> 
+            <Messages selectedContact={this.state.currentMessage} messages={this.state.messages}/>
+                
+        </Col>
 
   </Row>
  

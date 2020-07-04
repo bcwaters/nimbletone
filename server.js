@@ -16,6 +16,39 @@ const textMessages = [[
     ]]
 
 
+
+
+
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD
+});
+
+
+
+
+
+
+    con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+    
+});
+
+
+
+
+
+//TODO move all db code to a DBUTILS file to simplify code navigation
+
+
+
+
+
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -39,13 +72,24 @@ function addToGroup(msg){
     if(noGroupFound){addNewGroup([msg])}
 }
 
-
-
-
+function insertIntoTable(eventJson){
+      var sql = "INSERT INTO mydb.messages (contact, identity, msg, event_type, timestamp) VALUES ('"+eventJson.number+"','+19288888420','"+eventJson.msg+"','"+eventJson.eventType+"','"+eventJson.timestamp+"');";
+  con.query(sql, function (err, result) {
+    if (err) throw err;
+    console.log("1 record inserted");
+  });
+}
 
 app.get('/v1/add',function(req, res){
  
-    addToGroup({timestamp: '12:00 7-29-20', number: req.query.number, msg:'exisint', eventType: 'received'});
+    addToGroup({timestamp: '12:00 7-29-20', number: req.query.number, msg:req.query.msg, eventType: 'received'});
+           insertIntoTable( {
+                                eventType: 'sent',
+                                timestamp: 'asdfasd', 
+                                number: '123456789' , 
+                                msg: 'test'
+                              })
+       res.end('ok');
 });
 
 
@@ -68,6 +112,15 @@ app.post('/text',(req, res) => {
                         msg: req.body.data.payload.text
                     })
         
+        insertIntoTable(
+            {
+                        eventType: 'received',
+                        timestamp: req.body.data.occurred_at, 
+                        number: req.body.data.payload.from.phone_number?req.body.data.payload.from.phone_number:123456789 , 
+                        msg: req.body.data.payload.text
+                    }
+        )
+        
         console.log("text added to array:" + req.body.data.payload.text)
     }
     
@@ -80,6 +133,16 @@ app.post('/text',(req, res) => {
                                 msg: req.body.data.payload.text
                               }
                             )
+           
+        insertIntoTable(
+       {
+                                eventType: 'sent',
+                                timestamp: req.body.data.occurred_at, 
+                                number: req.body.data.payload.to[0].phone_number?req.body.data.payload.to[0].phone_number:123456789 , 
+                                msg: req.body.data.payload.text
+                              }
+        )
+ 
         
         
         console.log("text added to array:" + req.body.data.payload.text)
@@ -122,9 +185,38 @@ app.get('/send/:number',(req, res) => {
     res.send(req.params)
 });
 
+
+
 app.get('/v1/messages',function(req, res){
  
-    res.json(textMessages)
+
+    
+    let sql = `SELECT * FROM mydb.messages`;
+con.query(sql, (error, results, fields) => {
+  if (error) {
+    return console.error(error.message);
+  }
+        var messages = results.map((msg) => (
+            {timestamp: msg.timestamp, number: msg.contact, msg:msg.msg, eventType: msg.event_type}))
+        
+        //TODO !This algorhythm assumes that the data is sorted by contact
+        var organizedResult = [[messages[0]]];
+        var uniqueContactIndex = 0;
+        for(var i = 1; i < messages.length; i++){
+            if(messages[i-1].number == messages[i].number){
+                organizedResult[uniqueContactIndex].push(messages[i])
+            }else{
+                uniqueContactIndex++
+                organizedResult.push([messages[i]])
+            }
+        }
+        
+        console.log(organizedResult)
+        res.json(organizedResult)
+});
+
+    
+    //res.json(textMessages)
  });
 
 

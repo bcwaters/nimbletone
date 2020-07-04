@@ -17,12 +17,11 @@ class Notifications extends Component {
       
   }
     
-
+    
+//TODO this mapping should use another component ContactNotification
     render() {
         var divStyle = {
             border: 'solid',
-            height: '600px',
-            width: '400px',
             padding: '30px'
         };
 
@@ -32,17 +31,18 @@ class Notifications extends Component {
                 <Container>
                     
                 <div style={divStyle}> 
-                    {this.props.messages.map((msgGroup,messageLocation) => ( 
-                        <Row>
-                        <div onClick={()=>{this.props.setSelectedContact(messageLocation)}} style={{height: '100px',     border: 'solid',     width: '400px'}}> 
-                            Contact: {msgGroup[0].number}
-                        </div>
-                        </Row>
-                     )
-                    )}
-                   
-        
-            
+                    {console.log( this.props.messages) }
+                    {this.props.messages.map(
+                        
+                        (conversation,messageLocation) => ( 
+
+                                <Row>
+                                    <div onClick={()=>{this.props.setSelectedContact(messageLocation)}} style={{height: '100px',     border: 'solid',     width: '400px'}}> 
+                                    Contact: {conversation[0].number}
+                                    </div>
+                                </Row>
+                        ))}
+           
                  </div>
                 </Container>
             </div>
