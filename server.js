@@ -177,8 +177,18 @@ con.query(sql, (error, results, fields) => {
             if(messages[i-1].number == messages[i].number){
                 organizedResult[uniqueContactIndex].push(messages[i])
             }else{
-                uniqueContactIndex++
-                organizedResult.push([messages[i]])
+                var added = false
+                for(var j = 0; j<organizedResult.length; j++){
+                    if(organizedResult[j][0].number == messages[i].number){
+                           organizedResult[j].push(messages[i])
+                            j = organizedResult.length //EWWWWWW!
+                            added = true;
+                    }
+                }
+                if(!added){
+                    uniqueContactIndex++
+                    organizedResult.push([messages[i]])
+                }
             }
         }
         
