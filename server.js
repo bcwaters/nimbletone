@@ -45,7 +45,6 @@ function insertIntoTable(eventJson){
 
 app.get('/v1/add',function(req, res){
  
-    addToGroup({timestamp: '12:00 7-29-20', number: req.query.number, msg:req.query.msg, eventType: 'received'});
            insertIntoTable( {
                                 eventType: 'sent',
                                 timestamp: 'asdfasd', 
@@ -142,9 +141,8 @@ app.get('/v1/messages',function(req, res){
         var messages = results.map((msg) => (
             {timestamp: msg.timestamp, number: msg.contact, msg:msg.msg, eventType: msg.event_type}))
         
-        //TODO !This algorhythm assumes that the data is sorted by contact MOVE TO HELPER FUNCTION
+        //TODO !This algorhithm assumes that the data is sorted by contact MOVE TO HELPER FUNCTION
         var organizedResult = [];
-        var uniqueContactIndex = 0;
         for(var i = 0; i < messages.length; i++){
             
                 //See if the number has already been found and add it to the existing array
@@ -158,8 +156,6 @@ app.get('/v1/messages',function(req, res){
                 }
                 //no msg add therefor we add a new entry for this array
                 if(!added){
-                              console.log('c'+ messages[i].number)
-                    uniqueContactIndex++
                     organizedResult.push([messages[i]])
                     added = true;
                 }

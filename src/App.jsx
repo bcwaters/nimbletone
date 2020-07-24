@@ -3,6 +3,9 @@ import Notifications from './components/Notifications.jsx'
 import Messages from './components/Messages.jsx'
 import {Container, Row, Col} from 'reactstrap'
 import "./App.css";
+import {ThemeProvider} from './styles/StyleProvider.js'
+
+//Primary colors for design https://paletton.com/#uid=52Q0u0kllllaFw0g0qFqFg0w0aF
 
 class App extends Component{
   
@@ -13,8 +16,11 @@ class App extends Component{
 
         this.state = {
             name: 'React',
+            currentMessage: 0,
             messages: [[   {timestamp: '12:00 7-29-20', number: '6504768039', msg:'1st Message', eventType: 'received'}]],
-            currentMessage: 0
+            styles: ThemeProvider.getCss("MainTheme"),
+            AppColor: ThemeProvider.getDefaultColor(),
+            
         };
             this.setSelectedContact = this.setSelectedContact.bind(this)
     }
@@ -42,7 +48,7 @@ class App extends Component{
         // instead of a catch() block so that we don't swallow
         // exceptions from actual bugs in components.
         (error) => {
-                       console.log("error fetching memory data")
+               
           this.setState({
             isLoaded: true,
             error
@@ -60,10 +66,10 @@ class App extends Component{
 <Container fluid>
   <Row>
         <Col xs={3}> ↓ Notifications component↓ <br/> 
-          <Notifications setSelectedContact={this.setSelectedContact} messages={this.state.messages}/>
+          <Notifications setSelectedContact={this.setSelectedContact} messages={this.state.messages} styles={this.state.styles}/>
         </Col>
         <Col xs={6}>   ↓ Messages component↓ <br/> 
-            <Messages selectedContact={this.state.currentMessage} messages={this.state.messages}/>
+            <Messages selectedContact={this.state.currentMessage} messages={this.state.messages} styles={this.state.styles}/>
                 
         </Col>
 

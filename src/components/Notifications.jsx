@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import TextEntryArea from './TextEntryArea.jsx'
 import {Container, Row, Col} from 'reactstrap'
+import './Notifications.css';
 
 class Notifications extends Component {
 
@@ -18,6 +19,8 @@ class Notifications extends Component {
   }
     
     
+    
+    
 //TODO this mapping should use another component ContactNotification
     render() {
         var divStyle = {
@@ -30,20 +33,21 @@ class Notifications extends Component {
            
                 <Container>
                     
-                <div style={divStyle}> 
-                    {console.log( this.props.messages) }
+                <div style={this.props.styles.NotificationContainer}> 
                     {this.props.messages.map(
-                        
+        
                         (conversation,messageLocation) => ( 
 
                                 <Row>
-                                    <div onClick={()=>{this.props.setSelectedContact(messageLocation)}} style={{height: '100px',     border: 'solid',     width: '400px'}}> 
+                                    <div onClick={()=>{this.props.setSelectedContact(messageLocation)}} style={this.props.styles.Notification} className={"Notification"}> 
                                     Contact: {conversation[0].number}
                                     </div>
                                 </Row>
                         ))}
+                    
            
                  </div>
+                    
                 </Container>
             </div>
         );
