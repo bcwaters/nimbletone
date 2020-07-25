@@ -23,10 +23,25 @@ class App extends Component{
             
         };
             this.setSelectedContact = this.setSelectedContact.bind(this)
+          this.getContactInfo = this.getContactInfo.bind(this)
     }
     
     setSelectedContact(messageLocation){
      this.setState({currentMessage:messageLocation})
+    }
+    
+      getContactInfo(phoneNumber){
+   var contactList = {
+    '+14806000995': "Mitch",
+    '+19288888420': "Me",
+    '+14802837963': "Chris I"
+    
+    
+   }
+   
+   return !!contactList[""+phoneNumber]?contactList[""+phoneNumber]:phoneNumber
+   
+   
     }
     
     //TODO add navbar and foot
@@ -59,6 +74,10 @@ class App extends Component{
 
 
     render(){
+        //Hardcoded contact list... not very private. Move to a database solution later
+
+        
+        
     return(
       <div className="App">
 
@@ -66,10 +85,10 @@ class App extends Component{
 <Container fluid>
   <Row>
         <Col xs={3}> ↓ Notifications component↓ <br/> 
-          <Notifications setSelectedContact={this.setSelectedContact} selectedContact={this.state.currentMessage} messages={this.state.messages} styles={this.state.styles}/>
+          <Notifications getContactInfo={this.getContactInfo} setSelectedContact={this.setSelectedContact} selectedContact={this.state.currentMessage} messages={this.state.messages} styles={this.state.styles}/>
         </Col>
         <Col xs={6}>   ↓ Messages component↓ <br/> 
-            <Messages selectedContact={this.state.currentMessage} messages={this.state.messages} styles={this.state.styles}/>
+            <Messages getContactInfo={this.getContactInfo} selectedContact={this.state.currentMessage} messages={this.state.messages} styles={this.state.styles}/>
                 
         </Col>
 

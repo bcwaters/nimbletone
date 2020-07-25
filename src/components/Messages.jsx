@@ -29,7 +29,7 @@ class Messages extends Component {
             <Row> 
                 <Col xs={8}>      
                     <div style={this.props.styles.MessageContact}>
-                        {'Contact: ' + this.props.messages[this.props.selectedContact][0].number}
+                        {'Contact: ' + this.props.getContactInfo(this.props.messages[this.props.selectedContact][0].number)}
                     </div>
                 </Col>
            
@@ -45,7 +45,7 @@ class Messages extends Component {
                         <Col xs={9}>
                         <div style={msg.eventType == 'sent'? this.props.styles.SentMessageStyle:this.props.styles.ReceivedMessageStyle} > {msg.msg} <br/></div>
                         </Col>
-                        {msg.eventType != 'sent'?<Col xs={3} > ------{msg.number} --</Col>:' '}
+                        {msg.eventType != 'sent'?<Col xs={3} > ------{ this.props.getContactInfo(msg.number) } --</Col>:' '}
                     </Row>
             
                   

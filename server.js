@@ -23,7 +23,11 @@ var con = mysql.createConnection({
   console.log("Connected!");
     
 });
-
+//Hardcoded contact list... not very private
+var contactList = {
+    '14806000995': "Mitch"
+    
+}
 
 //TODO move all db code to a DBUTILS file to simplify code navigation
 app.use(bodyParser.urlencoded({ extended: false }));

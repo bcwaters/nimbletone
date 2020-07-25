@@ -44,8 +44,8 @@ class Notifications extends Component {
 
                                 <Row>
                                     <div onClick={()=>{this.props.setSelectedContact(messageLocation)}} style={this.state.currentMessage != messageLocation?this.props.styles.Notification:this.props.styles.SelectedNotification} 
-                                    className={"Notification"}> 
-                                    Contact: {conversation[0].number} 
+                                    className={"Notification"}> {console.log(this.props.contactList)}
+                                    Contact: {this.props.getContactInfo(conversation[0].number + "")} 
                                     </div>
                                 </Row>
                         ))}
