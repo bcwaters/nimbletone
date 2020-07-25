@@ -66,7 +66,7 @@ class App extends Component{
 <Container fluid>
   <Row>
         <Col xs={3}> ↓ Notifications component↓ <br/> 
-          <Notifications setSelectedContact={this.setSelectedContact} messages={this.state.messages} styles={this.state.styles}/>
+          <Notifications setSelectedContact={this.setSelectedContact} selectedContact={this.state.currentMessage} messages={this.state.messages} styles={this.state.styles}/>
         </Col>
         <Col xs={6}>   ↓ Messages component↓ <br/> 
             <Messages selectedContact={this.state.currentMessage} messages={this.state.messages} styles={this.state.styles}/>

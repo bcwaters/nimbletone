@@ -103,10 +103,23 @@ class ThemeProviderClass {
         
         var notification = {
             height: '100px',
+            borderRadius: '7px',
+            borderStyle: 'solid',
+            barderWidth: '5px',
+            borderColor: this.AppColors[themeName].primaryLight + '60',  
+            background: this.AppColors[themeName].secondaryLight + '55',
+            width: '400px',
+            padding: '5px',
+            marginBottom: '3px',
+            transition: "all ease .5s",
+        }
+        
+         var selectedNotification = {
+            height: '100px',
             borderRadius: '3px',
             borderStyle: 'solid',
-       
-            borderColor: this.AppColors[themeName].secondary,
+            borderWidth: '2px',
+            borderColor: this.AppColors[themeName].secondary,  
             background: this.AppColors[themeName].secondaryLight + '99',
             width: '400px',
             padding: '5px',
@@ -178,6 +191,7 @@ class ThemeProviderClass {
             ProductContainer : productContainer,
             ItemOverlayHovered: itemOverlayHovered,
             Notification: notification,
+            SelectedNotification: selectedNotification,
             NotificationContainer: notificationContainer,
             MessageContainer: messageContainer,
             MessageContact: messageContact,

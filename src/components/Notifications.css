@@ -4,5 +4,6 @@
  
 }
 
-.Notification:hover {background: #efefefBB !Important;}
+.Notification:hover {background: #efefefBB !Important;
+cursor: pointer !Important}
    

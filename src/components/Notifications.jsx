@@ -10,6 +10,7 @@ class Notifications extends Component {
         super(props);
         this.state = {
             name: 'React',
+            currentMessage: 0,
         };
     }
     
@@ -18,8 +19,11 @@ class Notifications extends Component {
       
   }
     
-    
-    
+    componentWillReceiveProps(nextProps) {
+    if (nextProps.selectedContact !== this.state.currentMessage) {console.log("update" + nextProps)
+        this.setState({ currentMessage: nextProps.selectedContact });
+    }
+    }
     
 //TODO this mapping should use another component ContactNotification
     render() {
@@ -39,8 +43,9 @@ class Notifications extends Component {
                         (conversation,messageLocation) => ( 
 
                                 <Row>
-                                    <div onClick={()=>{this.props.setSelectedContact(messageLocation)}} style={this.props.styles.Notification} className={"Notification"}> 
-                                    Contact: {conversation[0].number}
+                                    <div onClick={()=>{this.props.setSelectedContact(messageLocation)}} style={this.state.currentMessage != messageLocation?this.props.styles.Notification:this.props.styles.SelectedNotification} 
+                                    className={"Notification"}> 
+                                    Contact: {conversation[0].number} 
                                     </div>
                                 </Row>
                         ))}
