@@ -18,7 +18,7 @@ class App extends Component{
             name: 'React',
             currentMessage: 0,
             messages: [[   {timestamp: '12:00 7-29-20', number: '6504768039', msg:'1st Message', eventType: 'received'}]],
-            styles: ThemeProvider.getCss("MainTheme"),
+            styles: ThemeProvider.getCss("TestTheme"),
             AppColor: ThemeProvider.getDefaultColor(),
             
         };
@@ -27,21 +27,18 @@ class App extends Component{
     }
     
     setSelectedContact(messageLocation){
-     this.setState({currentMessage:messageLocation})
+        this.setState({currentMessage:messageLocation})
     }
     
-      getContactInfo(phoneNumber){
-   var contactList = {
-    '+14806000995': "Mitch",
-    '+19288888420': "Me",
-    '+14802837963': "Chris I"
-    
-    
-   }
+    //Hardcoded contact list... not very private. Move to a database solution later
+    getContactInfo(phoneNumber){
+        var contactList = {
+            '+14806000995': "Mitch",
+            '+19288888420': "Me",
+            '+14802837963': "Chris I"
+        }
    
-   return !!contactList[""+phoneNumber]?contactList[""+phoneNumber]:phoneNumber
-   
-   
+        return !!contactList[""+phoneNumber]?contactList[""+phoneNumber]:phoneNumber
     }
     
     //TODO add navbar and foot
@@ -62,43 +59,30 @@ class App extends Component{
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
         // exceptions from actual bugs in components.
-        (error) => {
-               
+        (error) => {   
           this.setState({
             isLoaded: true,
             error
           });
-        }
-      )
+        })
       }
-
-
+    
+    
     render(){
-        //Hardcoded contact list... not very private. Move to a database solution later
 
-        
-        
-    return(
-      <div className="App">
-
-                            
-<Container fluid>
-  <Row>
-        <Col xs={3}> ↓ Notifications component↓ <br/> 
-          <Notifications getContactInfo={this.getContactInfo} setSelectedContact={this.setSelectedContact} selectedContact={this.state.currentMessage} messages={this.state.messages} styles={this.state.styles}/>
-        </Col>
-        <Col xs={6}>   ↓ Messages component↓ <br/> 
-            <Messages getContactInfo={this.getContactInfo} selectedContact={this.state.currentMessage} messages={this.state.messages} styles={this.state.styles}/>
-                
-        </Col>
-
-  </Row>
- 
-</Container>
-             
-
-
-      </div>
+        return(
+    <div className="App">
+    <Container fluid>
+        <Row>
+            <Col xs={3}> ↓ Notifications component↓ <br/> 
+                <Notifications getContactInfo={this.getContactInfo} setSelectedContact={this.setSelectedContact} selectedContact={this.state.currentMessage} messages={this.state.messages} styles={this.state.styles}/>
+            </Col>
+            <Col xs={6}>   ↓ Messages component↓ <br/> 
+                <Messages getContactInfo={this.getContactInfo} selectedContact={this.state.currentMessage} messages={this.state.messages} styles={this.state.styles}/>    
+            </Col>
+        </Row>
+    </Container>
+    </div>
     );
   }
 }

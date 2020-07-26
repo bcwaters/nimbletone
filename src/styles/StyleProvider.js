@@ -134,6 +134,14 @@ class ThemeProviderClass {
             padding: '30px'
         }
         
+            var notificationStatus = {
+                color: '#992244',
+                borderRadius: '20px',
+                borderWidth: '2px',
+                border: 'solid',  
+                padding: '20px'
+            }
+        
         var messageContainer = {
             border: 'solid',
             borderColor:this.AppColors[themeName].primary,
@@ -180,8 +188,6 @@ class ThemeProviderClass {
             }
         
 
-        
-
         return {
             PageHeader: _PageHeader,
             AngleDivider: _AngleDivider,
@@ -197,10 +203,9 @@ class ThemeProviderClass {
             MessageContact: messageContact,
             ReceivedMessageStyle: receivedMessageStyle,
             SentMessageStyle: sentMessageStyle,
-            ConversationContainer: conversationContainer
-            
-            
-            
+            ConversationContainer: conversationContainer,
+            NotificationStatus: notificationStatus
+        
         }
 
     }

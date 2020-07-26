@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import TextEntryArea from './TextEntryArea.jsx'
 import {Container, Row, Col} from 'reactstrap'
+import NotificationCard from './NotificationCard.jsx'
 import './Notifications.css';
 
 class Notifications extends Component {
@@ -41,13 +42,7 @@ class Notifications extends Component {
                     {this.props.messages.map(
         
                         (conversation,messageLocation) => ( 
-
-                                <Row>
-                                    <div onClick={()=>{this.props.setSelectedContact(messageLocation)}} style={this.state.currentMessage != messageLocation?this.props.styles.Notification:this.props.styles.SelectedNotification} 
-                                    className={"Notification"}> {console.log(this.props.contactList)}
-                                    Contact: {this.props.getContactInfo(conversation[0].number + "")} 
-                                    </div>
-                                </Row>
+                                <NotificationCard conversation={conversation} messageLocation={messageLocation} setSelectedContact={this.props.setSelectedContact} styles={this.props.styles} selectedContact={this.props.selectedContact} getContactInfo={this.props.getContactInfo}></NotificationCard>
                         ))}
                     
            
