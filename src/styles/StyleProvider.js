@@ -133,31 +133,44 @@ class ThemeProviderClass {
         
         var notificationContainer = {
             background: this.AppColors[themeName].accentLight + '80',
-            borderStyle: 'solid',
             borderColor:this.AppColors[themeName].primary,
-            padding: '5px'
+            borderStyle: 'solid',
+            borderWidth: '1px',
+            padding: '5px',
+            borderRadius: '40px 40px 0px 0px',
+         
         }
         
-            var notificationStatus = {
-                background: '#992244',
+        var notificationStatus = {
+                background: '#904050',
                 borderRadius: '20px',
-                borderWidth: '2px',
-                border: 'solid',  
                 padding: '2px',
                 width: '8px'
-            }
+        }
         
         var messageContainer = {
-            border: 'solid',
+            border: 'solid 2px',
             borderColor:this.AppColors[themeName].primary,
-            padding: '20px',
-            background: this.AppColors[themeName].accentLight + '50'
+            borderRadius: '20px 3px 3px 3px',
+            background: this.AppColors[themeName].accentLight + '50',
+       
         }
         
         var messageContact = {
-            border: 'solid',   
+            borderRadius: '20px 0px 0px 0px',
             padding: '20px',   
             background: this.AppColors[themeName].secondaryLight + '99'
+        }
+        
+        var notificationHeader = {
+            marginTop:'-5px',
+            borderRadius: '30px 30px 0px 0px',
+            marginLeft: '8px',   
+            marginRight: '8px',
+            marginBottom: '5px',
+            fontFamily: 'Sans',
+            fontWeight: '700',
+            background: this.AppColors[themeName].secondaryLight + 'BB'
         }
         
         
@@ -165,7 +178,6 @@ class ThemeProviderClass {
           var receivedMessageStyle = {
             borderWidth: '2px',
             borderRadius: '25px',
-         
             background: this.AppColors[themeName].secondary + '80',
             borderStyle: 'solid',
             padding: '20px',
@@ -176,21 +188,33 @@ class ThemeProviderClass {
         var sentMessageStyle = {
               borderWidth: '2px',
             borderRadius: '25px',
-          
             background: this.AppColors[themeName].accent + '80',
             borderStyle: 'solid',
             padding: '20px',
             margin: '5px'
            
         }
+        var senderFont = {
+                  fontFamily: 'Sans',
+            fontWeight: '700',
+            fontSize: '10px'
+        }
         
         var conversationContainer = {
                 background: this.AppColors[themeName].primaryLight + '80',
-                borderRadius: '11px',
-                borderWidth: '8px',
-                border: 'solid',  
-                padding: '20px'
+                padding: '20px',
+                maxHeight: '500px',
+                overflowY: 'auto',
+                display: 'flex',
+                flexDirection:'column'
             }
+        
+         var replyBox = {
+        border: 'solid',
+        height: '150px',
+        minWidth: '300px',
+        margin: '5px'
+    }
         
 
         return {
@@ -210,7 +234,10 @@ class ThemeProviderClass {
             SentMessageStyle: sentMessageStyle,
             ConversationContainer: conversationContainer,
             NotificationStatus: notificationStatus,
-            TopNavBar: topNavBar
+            TopNavBar: topNavBar,
+            NotificationHeader: notificationHeader,
+            ReplyBox: replyBox,
+            SenderFont: senderFont
         
         }
 

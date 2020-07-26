@@ -34,22 +34,25 @@ class Notifications extends Component {
         };
 
         return (
-            <div className="react">
+
         
                     
                 <div style={this.props.styles.NotificationContainer}> 
-        
+                <Grid style={{marginTop:'0px', marginBottom: '20px'}} textAlign={'center'} verticalAlign={'middle'}>
+                    <Grid.Row style={this.props.styles.NotificationHeader}>
+                        <div >Contacts</div>
+                    </Grid.Row>
                     {this.props.messages.map(
         
                         (conversation,messageLocation) => ( 
                                 <NotificationCard conversation={conversation} messageLocation={messageLocation} setSelectedContact={this.props.setSelectedContact} styles={this.props.styles} selectedContact={this.props.selectedContact} getContactInfo={this.props.getContactInfo}></NotificationCard>
                         ))}
                     
-         
+                </Grid>
                  </div>
                     
       
-            </div>
+        
         );
     }
 }

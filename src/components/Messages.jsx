@@ -23,43 +23,58 @@ class Messages extends Component {
     render() {
         
         return (
-            <div className="react">
+         
+                  <div style={this.props.styles.MessageContainer}>
           <Grid>
-            <div style={this.props.styles.MessageContainer}>
-            <Grid.Row> 
-                <Grid.Column width={8}>      
+          
+            <Grid.Row style={{paddingBottom: '0px'}}> 
+                <Grid.Column >      
                     <div style={this.props.styles.MessageContact}>
-                        {'Contact: ' + this.props.getContactInfo(this.props.messages[this.props.selectedContact][0].number)}
+                        {this.props.getContactInfo(this.props.messages[this.props.selectedContact][0].number)}
                     </div>
                 </Grid.Column>
-           
-                <Grid.Column width={4}>     
-                </Grid.Column>
             </Grid.Row>
-           <div style={this.props.styles.ConversationContainer}>
-            Converation
+              
+            <Grid.Row style={{paddingTop: '0px',paddingBottom: '0px'}}> 
+                <Grid.Column  >  
+                   <div style={this.props.styles.ConversationContainer}>
+                 <Grid >
+  
+                
             {this.props.messages[this.props.selectedContact].map(msg => 
                 (   
-                    <Grid.Row>
-                     {msg.eventType == 'sent'?<Grid.Column width={3}> ---You--- </Grid.Column>:' '}
-                        <Grid.Column width={9}>
+                   
+                    <Grid.Row >   
+                        {msg.eventType == 'sent'?<Grid.Column style={{padding: '0px'}} width={2} textAlign={'center'} verticalAlign={'middle'}><div style={this.props.styles.SenderFont}> You  </div></Grid.Column>:' '}
+                        <Grid.Column style={{padding: '0px'}} width={14}>
                         <div style={msg.eventType == 'sent'? this.props.styles.SentMessageStyle:this.props.styles.ReceivedMessageStyle} > {msg.msg} <br/></div>
                         </Grid.Column>
-                        {msg.eventType != 'sent'?<Grid.Column width={3} > ------{ this.props.getContactInfo(msg.number) } --</Grid.Column>:' '}
-                    </Grid.Row>
-            
+                         {msg.eventType != 'sent'?<Grid.Column style={{padding: '0px'}} width={2} textAlign={'center'} verticalAlign={'middle'}> <div style={this.props.styles.SenderFont}> { this.props.getContactInfo(msg.number) } </div></Grid.Column>:' '}
+                    
+                   
+                    </Grid.Row > 
                   
                     
                 )
             )}
-            </div>
-                 <div style={{border: 'solid',   padding: '20px'}}>
-                        Reply
-                     <TextEntryArea/>
-                     </div>
-            </div>
+                   </Grid>
+              </div>
+                </Grid.Column> 
+            </Grid.Row> 
+         
+                <Grid.Row style={{paddingTop: '0px'}} >
+                         <Grid.Column>
+                    <div style={{border: 'solid 1px ', padding: '20px'}}>
+                        <TextEntryArea styles={this.props.styles}/>
+                    </div>
+                             </Grid.Column>
+                </Grid.Row>
+                   
+               
+       
           </Grid>
-            </div>
+                    </div>
+         
         );
     }
     
