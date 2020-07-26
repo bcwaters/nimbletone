@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import TextEntryArea from './TextEntryArea.jsx'
 import {Container, Grid, Row, Column} from 'semantic-ui-react'
-import './Notifications.css';
+
 
 class NotificationCard extends Component {
 

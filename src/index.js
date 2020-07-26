@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App.jsx";
-import './Components/Notifications.css'
+import './components/Notifications.css'
 import {ThemeProvider} from './styles/StyleProvider.js'
 
 

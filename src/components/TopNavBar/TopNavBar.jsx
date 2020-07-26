@@ -119,9 +119,9 @@ class TopNavBar extends Component {
                           size='large'>
                         <Menu.Item name='home' active={activeItem === 'home'} onClick={this.handleItemClick} to='/'/>
                         <Menu.Item
-                            name='shop'
+                            name='contacts'
                             to='/shop'
-                            active={activeItem === 'shop'}
+                            active={activeItem === 'contacts'}
                             onClick={this.handleItemClick}
                         />
                         <Menu.Item
