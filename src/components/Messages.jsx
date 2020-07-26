@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Container, Row, Col} from 'reactstrap'
+import {Container, Row, Column, Grid} from 'semantic-ui-react'
 import TextEntryArea from './TextEntryArea.jsx'
 
 //TODO rename to conversation
@@ -24,29 +24,29 @@ class Messages extends Component {
         
         return (
             <div className="react">
-          <Container>
+          <Grid>
             <div style={this.props.styles.MessageContainer}>
-            <Row> 
-                <Col xs={8}>      
+            <Grid.Row> 
+                <Grid.Column width={8}>      
                     <div style={this.props.styles.MessageContact}>
                         {'Contact: ' + this.props.getContactInfo(this.props.messages[this.props.selectedContact][0].number)}
                     </div>
-                </Col>
+                </Grid.Column>
            
-                <Col xs={4}>     
-                </Col>
-            </Row>
+                <Grid.Column width={4}>     
+                </Grid.Column>
+            </Grid.Row>
            <div style={this.props.styles.ConversationContainer}>
             Converation
             {this.props.messages[this.props.selectedContact].map(msg => 
                 (   
-                    <Row>
-                     {msg.eventType == 'sent'?<Col xs={3}> -----You--- </Col>:' '}
-                        <Col xs={9}>
+                    <Grid.Row>
+                     {msg.eventType == 'sent'?<Grid.Column width={3}> ---You--- </Grid.Column>:' '}
+                        <Grid.Column width={9}>
                         <div style={msg.eventType == 'sent'? this.props.styles.SentMessageStyle:this.props.styles.ReceivedMessageStyle} > {msg.msg} <br/></div>
-                        </Col>
-                        {msg.eventType != 'sent'?<Col xs={3} > ------{ this.props.getContactInfo(msg.number) } --</Col>:' '}
-                    </Row>
+                        </Grid.Column>
+                        {msg.eventType != 'sent'?<Grid.Column width={3} > ------{ this.props.getContactInfo(msg.number) } --</Grid.Column>:' '}
+                    </Grid.Row>
             
                   
                     
@@ -58,7 +58,7 @@ class Messages extends Component {
                      <TextEntryArea/>
                      </div>
             </div>
-          </Container>
+          </Grid>
             </div>
         );
     }

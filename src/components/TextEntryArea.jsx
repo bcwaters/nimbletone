@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Container, Row, Col, Button,Input} from 'reactstrap'
+import {Container, Row, Grid, Column, Button,Input} from 'semantic-ui-react'
 
 
 class TextEntryArea extends Component {
@@ -22,25 +22,25 @@ class TextEntryArea extends Component {
 
         return (
              <div className="react">
-               <Container>
-               <Row fluid>
-                <Col xs={11}>
+               <Grid>
+               <Grid.Row fluid>
+                <Grid.Column width={11}>
                     <div style={divStyle}>
                         ↓ TextEntryArea Component ↓
                   <Input type="textarea" name="text" id="exampleText" />
                     </div>
-                </Col>
+                </Grid.Column>
            
         
-                    <Col xs={1} >
-                    <Row><br/><br/><br/><br/><br/></Row>     
+                    <Grid.Column width={1} >
+                    <Grid.Row><br/><br/><br/><br/><br/></Grid.Row>     
       
-                    <Row>
+                    <Grid.Row>
                         <Button color="primary" size="sm">Send</Button>
-                    </Row>
-                    </Col>
-                </Row>
-             </Container>
+                    </Grid.Row>
+                    </Grid.Column>
+                </Grid.Row>
+             </Grid>
             </div>
         );
     }

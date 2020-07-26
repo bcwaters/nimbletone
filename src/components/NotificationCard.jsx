@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import TextEntryArea from './TextEntryArea.jsx'
-import {Container, Row, Col} from 'reactstrap'
+import {Container, Grid, Row, Column} from 'semantic-ui-react'
 import './Notifications.css';
 
 class NotificationCard extends Component {
@@ -24,7 +24,7 @@ class NotificationCard extends Component {
         if(this.props.selectedContact != this.props.messageLocation){
             return null
         }
-        return (<div style={this.props.styles.NotificationStatus}>1</div>)
+        return (<span style={this.props.styles.NotificationStatus}>★</span>)
     }
     
     componentWillReceiveProps(nextProps) {
@@ -41,23 +41,24 @@ class NotificationCard extends Component {
         };
 
         return (
-            <div className="react">
-                 <Row>
+      
+           
+                <Container>
                     <div onClick={()=>{this.props.setSelectedContact(this.props.messageLocation)}} style={this.props.selectedContact != this.props.messageLocation?this.props.styles.Notification:this.props.styles.SelectedNotification} 
                     className={"Notification"}> 
                         
-                    <Row> 
-                        <Col xs={8}>
-                            <div style={{padding:'20px'}}>{this.props.getContactInfo(this.props.conversation[0].number + "")} 
-                            </div>
-                        </Col>
-                        <Col xs={4}> 
+                    <Grid.Row> 
+                            <span style={{paddingLeft:'20px', paddingTop:'10px', marginRight:'5px'}}>{this.props.getContactInfo(this.props.conversation[0].number + "")} 
+                            </span>
+
                             {this.getCardStatus()}
-                        </Col>
-                    </Row>
+        
+                    </Grid.Row>
                     </div>
-                </Row> 
-            </div>
+                    </Container>
+             
+
+  
         );
     }
 }

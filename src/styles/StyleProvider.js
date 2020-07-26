@@ -33,6 +33,10 @@ class ThemeProviderClass {
             backgroundColor: this.AppColors[themeName].primaryLight,
             top: ".3em"
         }
+        
+        var topNavBar = {
+            backgroundColor: this.AppColors[themeName].secondary
+        }
 
         var linearGradientString = 'linear-gradient(to right bottom,'
             + this.AppColors[themeName].secondaryDark +
@@ -102,13 +106,13 @@ class ThemeProviderClass {
         }
         
         var notification = {
-            height: '100px',
+        
             borderRadius: '7px',
             borderStyle: 'solid',
             barderWidth: '5px',
             borderColor: this.AppColors[themeName].primaryLight + '60',  
             background: this.AppColors[themeName].secondaryLight + '55',
-            width: '400px',
+            maxWidth: '400px',
             padding: '5px',
             marginBottom: '3px',
             transition: "all ease .5s",
@@ -121,7 +125,7 @@ class ThemeProviderClass {
             borderWidth: '2px',
             borderColor: this.AppColors[themeName].secondary,  
             background: this.AppColors[themeName].secondaryLight + '99',
-            width: '400px',
+            maxWidth: '400px',
             padding: '5px',
             marginBottom: '3px',
             transition: "all ease .5s",
@@ -131,15 +135,16 @@ class ThemeProviderClass {
             background: this.AppColors[themeName].accentLight + '80',
             borderStyle: 'solid',
             borderColor:this.AppColors[themeName].primary,
-            padding: '30px'
+            padding: '5px'
         }
         
             var notificationStatus = {
-                color: '#992244',
+                background: '#992244',
                 borderRadius: '20px',
                 borderWidth: '2px',
                 border: 'solid',  
-                padding: '20px'
+                padding: '2px',
+                width: '8px'
             }
         
         var messageContainer = {
@@ -204,7 +209,8 @@ class ThemeProviderClass {
             ReceivedMessageStyle: receivedMessageStyle,
             SentMessageStyle: sentMessageStyle,
             ConversationContainer: conversationContainer,
-            NotificationStatus: notificationStatus
+            NotificationStatus: notificationStatus,
+            TopNavBar: topNavBar
         
         }
 
