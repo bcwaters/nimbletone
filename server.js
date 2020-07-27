@@ -115,8 +115,9 @@ app.post('/text',(req, res) => {
         
            console.log('text received emitting over socket:' + req.body.data.payload.from.phone_number)
      //{timestamp: msg.timestamp, number: msg.contact, msg:msg.msg, eventType: msg.event_type}
-        //TODO pass message to append to client app ui
-    req.io.emit('textReceived', {"number":'+1' + req.body.data.payload.from.phone_number})
+        //TODO pass message to append to client app ui 
+        //TODO take the time to normalize the data exchanged between client and telnyx
+    req.io.emit('textReceived', {"number": req.body.data.payload.from.phone_number})
         
     }
     

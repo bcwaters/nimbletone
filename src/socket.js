@@ -8,9 +8,7 @@ export default function () {
         console.log('registerHandler called in client socket')
             socket.on("textReceived", data => {
             componentFunction(data);
-          
-     
-          
+       
     });
     }
     
