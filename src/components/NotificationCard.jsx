@@ -11,7 +11,7 @@ class NotificationCard extends Component {
         this.state = {
             name: 'React',
             currentMessage: 0,
-            unread: false
+            unreadContacts: []
         };
         
               this.getCardStatus = this.getCardStatus.bind(this)
@@ -22,10 +22,10 @@ class NotificationCard extends Component {
     }
     
     getCardStatus(){
-        if(this.props.shouldNotify.phoneNumber != this.props.conversation[0].number){
+        if(!this.props.shouldNotify){
             return null
         }else{
-        return (<span style={this.props.styles.NotificationStatus}>★</span>)
+        return (<span style={this.props.styles.NotificationStatus}>!</span>)
         }
     }
     

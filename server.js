@@ -113,6 +113,11 @@ app.post('/text',(req, res) => {
                     }
                 )
         
+           console.log('text received emitting over socket:' + req.body.data.payload.from.phone_number)
+     //{timestamp: msg.timestamp, number: msg.contact, msg:msg.msg, eventType: msg.event_type}
+        //TODO pass message to append to client app ui
+    req.io.emit('textReceived', {"number":'+1' + req.body.data.payload.from.phone_number})
+        
     }
     
     if( (req.body.data.event_type == "message.sent")){
@@ -134,7 +139,7 @@ app.post('/text',(req, res) => {
 app.post('/emit',(req, res) => {
 
     //log everthing
-   console.log('emitting')
+   console.log('text received emitting over socket')
      //{timestamp: msg.timestamp, number: msg.contact, msg:msg.msg, eventType: msg.event_type}
     req.io.emit('textReceived', req.body)
    res.end(JSON.stringify(req.body));

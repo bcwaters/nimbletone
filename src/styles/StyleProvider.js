@@ -142,7 +142,8 @@ class ThemeProviderClass {
         }
         
         var notificationStatus = {
-                background: '#904050',
+                background: '#aa1100',
+                color: '#FFFFFA',
                 borderRadius: '20px',
                 padding: '2px',
                 width: '8px'
@@ -186,7 +187,7 @@ class ThemeProviderClass {
         }
           
         var sentMessageStyle = {
-              borderWidth: '2px',
+            borderWidth: '2px',
             borderRadius: '25px',
             background: this.AppColors[themeName].accent + '80',
             borderStyle: 'solid',
@@ -195,7 +196,7 @@ class ThemeProviderClass {
            
         }
         var senderFont = {
-                  fontFamily: 'Sans',
+            fontFamily: 'Sans',
             fontWeight: '700',
             fontSize: '10px'
         }
