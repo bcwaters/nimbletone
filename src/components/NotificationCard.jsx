@@ -11,6 +11,7 @@ class NotificationCard extends Component {
         this.state = {
             name: 'React',
             currentMessage: 0,
+            unread: false
         };
         
               this.getCardStatus = this.getCardStatus.bind(this)
@@ -21,14 +22,15 @@ class NotificationCard extends Component {
     }
     
     getCardStatus(){
-        if(this.props.selectedContact != this.props.messageLocation){
+        if(this.props.shouldNotify.phoneNumber != this.props.conversation[0].number){
             return null
-        }
+        }else{
         return (<span style={this.props.styles.NotificationStatus}>★</span>)
+        }
     }
     
     componentWillReceiveProps(nextProps) {
-    if (nextProps.selectedContact !== this.state.currentMessage) {console.log("update" + nextProps)
+    if (nextProps.selectedContact !== this.state.currentMessage) {
         this.setState({ currentMessage: nextProps.selectedContact });
     }
     }

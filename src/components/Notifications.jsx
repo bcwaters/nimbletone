@@ -12,16 +12,26 @@ class Notifications extends Component {
         this.state = {
             name: 'React',
             currentMessage: 0,
+            unreadMessages : {}
         };
+        
+        this.onTextReceived = this.onTextReceived.bind(this)
     }
     
   componentDidMount() {
-
+        this.props.onTextRecievedHandler(this.onTextReceived)
       
   }
     
+    onTextReceived(data){
+        console.log(data)
+      this.setState({ unreadMessages: data });
+    }
+    
+    
+
     componentWillReceiveProps(nextProps) {
-    if (nextProps.selectedContact !== this.state.currentMessage) {console.log("update" + nextProps)
+    if (nextProps.selectedContact !== this.state.currentMessage) {
         this.setState({ currentMessage: nextProps.selectedContact });
     }
     }
@@ -45,7 +55,7 @@ class Notifications extends Component {
                     {this.props.messages.map(
         
                         (conversation,messageLocation) => ( 
-                                <NotificationCard conversation={conversation} messageLocation={messageLocation} setSelectedContact={this.props.setSelectedContact} styles={this.props.styles} selectedContact={this.props.selectedContact} getContactInfo={this.props.getContactInfo}></NotificationCard>
+                                <NotificationCard conversation={conversation} messageLocation={messageLocation} setSelectedContact={this.props.setSelectedContact} styles={this.props.styles} selectedContact={this.props.selectedContact} getContactInfo={this.props.getContactInfo} shouldNotify={this.state.unreadMessages}></NotificationCard>
                         ))}
                     
                 </Grid>

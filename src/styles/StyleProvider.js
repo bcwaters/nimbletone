@@ -28,7 +28,7 @@ class ThemeProviderClass {
     }
 
     getCss = (themeName) => {
-        console.log("called for theme: " + themeName)
+  
         var buttonCss = {
             backgroundColor: this.AppColors[themeName].primaryLight,
             top: ".3em"

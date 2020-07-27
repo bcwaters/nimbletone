@@ -5,6 +5,7 @@ import TopNavBar from './components/TopNavBar/TopNavBar.jsx'
 import {Container, Grid, Row, Column} from 'semantic-ui-react'
 import "./App.css";
 import {ThemeProvider} from './styles/StyleProvider.js'
+import socket from './socket.js'
 
 //Primary colors for design https://paletton.com/#uid=52Q0u0kllllaFw0g0qFqFg0w0aF
 
@@ -17,12 +18,14 @@ class App extends Component{
 
         this.state = {
             name: 'React',
+            clientsideSocket: socket(),
             currentMessage: 0,
             messages: [[   {timestamp: '12:00 7-29-20', number: '6504768039', msg:'1st Message', eventType: 'received'}]],
             styles: ThemeProvider.getCss("MainTheme"),
             AppColor: ThemeProvider.getDefaultColor(),
             
         };
+          
             this.setSelectedContact = this.setSelectedContact.bind(this)
             this.getContactInfo = this.getContactInfo.bind(this)
     }
@@ -42,12 +45,14 @@ class App extends Component{
     }
     
     //Hardcoded contact list... not very private. Move to a database solution later
+    //Ughhh TODO implement functionality to load/add contacts
     getContactInfo(phoneNumber){
         var contactList = {
             '+14806000995': "Mitch",
             '+19288888420': "Me",
             '+14802837963': "Chris I",
-            '+14803236056': "Eric G"
+            '+14803236056': "Eric G",
+            '+14802213122': "Ryan"
         }
    
         return !!contactList[""+phoneNumber]?contactList[""+phoneNumber]:phoneNumber
@@ -59,8 +64,7 @@ class App extends Component{
       .then(res => res.json())
       .then(
         (result) => {
-            console.log("fetched success")
-            console.log(result)
+         
           this.setState({
             isLoaded: true,
             messages: result
@@ -94,7 +98,7 @@ class App extends Component{
         <Grid.Row>
             <Grid.Column width={1} ></Grid.Column>
             <Grid.Column width={3} >
-                <Notifications getContactInfo={this.getContactInfo} setSelectedContact={this.setSelectedContact} selectedContact={this.state.currentMessage} messages={this.state.messages} styles={this.state.styles}/>
+                <Notifications onTextRecievedHandler={(handleTextFunction) => this.state.clientsideSocket.onTextReceived(handleTextFunction)} getContactInfo={this.getContactInfo} setSelectedContact={this.setSelectedContact} selectedContact={this.state.currentMessage} messages={this.state.messages} styles={this.state.styles}/>
             </Grid.Column >
             <Grid.Column width={6}> 
                 <Messages getContactInfo={this.getContactInfo} selectedContact={this.state.currentMessage} messages={this.state.messages} styles={this.state.styles}/>    

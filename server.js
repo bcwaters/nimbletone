@@ -10,6 +10,37 @@ require('dotenv').config()
 //TODO replace the in memory solution with a database call
 //DB call will return an Array of Jsons sorted by the number which most recently recieved a text using the phonenumber as the uniquekey
 
+var server = http.createServer(app);
+// Pass a http.Server instance to the listen method
+var io = require('socket.io').listen(server);
+
+io.on("connection", (socket) => {
+  console.log("New client connected");
+  if (interval) {
+    clearInterval(interval);
+  }
+  interval = setInterval(() => getApiAndEmit(socket), 1000);
+  socket.on("disconnect", () => {
+    console.log("Client disconnected");
+    clearInterval(interval);
+  });
+});
+
+const getApiAndEmit = socket => {
+  const response = new Date();
+  // Emitting a new message. Will be consumed by the client
+  socket.emit("FromAPI", response);
+};
+
+app.use(function(req,res,next){
+req.io = io;
+next();
+})
+
+
+var globalValue = 'test'
+
+
 var mysql = require('mysql');
 
 var con = mysql.createConnection({
@@ -47,7 +78,7 @@ function insertIntoTable(eventJson){
   });
 }
 
-app.get('/v1/add',function(req, res){
+app.get('/v1/addContact',function(req, res){
  
            insertIntoTable( {
                                 eventType: 'sent',
@@ -97,6 +128,21 @@ app.post('/text',(req, res) => {
     }
    res.end(JSON.stringify(req.body));
 });
+
+
+//end point for testing socket
+app.post('/emit',(req, res) => {
+
+    //log everthing
+   console.log('emitting')
+     //{timestamp: msg.timestamp, number: msg.contact, msg:msg.msg, eventType: msg.event_type}
+    req.io.emit('textReceived', req.body)
+   res.end(JSON.stringify(req.body));
+});
+
+
+
+
 
 
 //get request made from react app that is then posted to telnyx to complete
@@ -171,12 +217,20 @@ app.get('/v1/messages',function(req, res){
  });
 
 
+//TODO this is wrong... website still served without it
 app.get('/',function(req, res){
-   // fs.readFile("text.log", "utf8", function(err, data) {  res.send(data); if(err) res.send('error')});
-               res.sendFile('index.html', {root: path.resolve(__dirname, './dist')});
+   // fs.readFile("text.log", "utf8", function(err, data) {  res.send(data); if(err) res.send('error')}); 
+     res.sendFile('index.html', {root: path.resolve(__dirname, './dist')});
+
  });
 
-app.listen(3000,() => {
+
+
+let interval;
+
+
+
+server.listen(3000,() => {
   console.log("Started on PORT 3000");
 })
 
