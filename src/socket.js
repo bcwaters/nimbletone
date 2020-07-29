@@ -6,11 +6,11 @@ export default function (hostname) {
     const socket = io.connect('http://' + hostname)
    
    
-    function onTextReceived(componentFunction) {
+    function onTextReceived(componentFunction, otherFunction) {
         console.log(hostname)
             socket.on("textReceived", data => {
             componentFunction(data);
-       
+            otherFunction();
     });
         
     }

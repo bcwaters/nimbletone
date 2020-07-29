@@ -117,7 +117,12 @@ app.post('/text',(req, res) => {
      //{timestamp: msg.timestamp, number: msg.contact, msg:msg.msg, eventType: msg.event_type}
         //TODO pass message to append to client app ui 
         //TODO take the time to normalize the data exchanged between client and telnyx
-    req.io.emit('textReceived', {"number": req.body.data.payload.from.phone_number})
+    req.io.emit('textReceived',     {
+                        "eventType": 'received',
+                        "timestamp": req.body.data.occurred_at, 
+                        "number": req.body.data.payload.from.phone_number?req.body.data.payload.from.phone_number:123456789 , 
+                        "msg": req.body.data.payload.text
+                    })
         
     }
     

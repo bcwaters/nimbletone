@@ -28,6 +28,8 @@ class App extends Component{
           
             this.setSelectedContact = this.setSelectedContact.bind(this)
             this.getContactInfo = this.getContactInfo.bind(this)
+            this.updateMessageList = this.updateMessageList.bind(this)
+          
     }
     
        setTheme = (themeName) => {
@@ -82,6 +84,32 @@ class App extends Component{
           });
         })
       }
+
+   //TODO this can be intelligently done by updating the state of the message on a socket event instead of refetching
+    updateMessageList(){
+           fetch("/v1/messages")
+      .then(res => res.json())
+      .then(
+        (result) => {
+         
+          this.setState({
+            isLoaded: true,
+            messages: result
+            
+          });
+            
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {   
+          this.setState({
+            isLoaded: true,
+            error
+          });
+        })
+        
+    }
     
     
     render(){
@@ -98,7 +126,7 @@ class App extends Component{
         <Grid.Row>
             <Grid.Column width={1} ></Grid.Column>
             <Grid.Column width={3} >
-                <Notifications onTextRecievedHandler={(handleTextFunction) => this.state.clientsideSocket.onTextReceived(handleTextFunction)} getContactInfo={this.getContactInfo} setSelectedContact={this.setSelectedContact} selectedContact={this.state.currentMessage} messages={this.state.messages} styles={this.state.styles}/>
+                <Notifications onTextRecievedHandler={(handleTextFunction) => this.state.clientsideSocket.onTextReceived(handleTextFunction, this.updateMessageList)} getContactInfo={this.getContactInfo} setSelectedContact={this.setSelectedContact} selectedContact={this.state.currentMessage} messages={this.state.messages} styles={this.state.styles}/>
             </Grid.Column >
             <Grid.Column width={6}> 
                 <Messages getContactInfo={this.getContactInfo} selectedContact={this.state.currentMessage} messages={this.state.messages} styles={this.state.styles}/>    
