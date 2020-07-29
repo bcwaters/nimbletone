@@ -14,6 +14,7 @@ class Notifications extends Component {
             currentMessage: 0,
             unreadMessages : []
         };
+        this.convoRef = React.createRef();
         
         this.onTextReceived = this.onTextReceived.bind(this)
         this.addMessageState = this.addMessageState.bind(this)
@@ -25,8 +26,10 @@ class Notifications extends Component {
         this.props.onTextRecievedHandler(this.onTextReceived)
         //TODO ugly and lazy way of prepping notification state
         this.props.messages.map(() => {this.addMessageState()})
-      
-  }
+          
+    }
+    
+
     
     onTextReceived(data){
     var newState = this.state.unreadMessages
@@ -90,7 +93,8 @@ class Notifications extends Component {
                     
                         (conversation,messageLocation) => ( 
                                
-                                <NotificationCard   conversation={conversation} 
+                                <NotificationCard   
+                                                    conversation={conversation} 
                                                     messageLocation={messageLocation} 
                                                     setSelectedContact={this.props.setSelectedContact} 
                                                     styles={this.props.styles} 

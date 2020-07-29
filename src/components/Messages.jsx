@@ -16,8 +16,11 @@ class Messages extends Component {
     
   componentDidMount() {
 
-      
   }
+    
+    componentDidUpdate(prevProps, prevState) {
+      this._convo.scrollTop = this._convo.scrollHeight;
+}
 
 
     render() {
@@ -37,7 +40,7 @@ class Messages extends Component {
               
             <Grid.Row style={{paddingTop: '0px',paddingBottom: '0px'}}> 
                 <Grid.Column  >  
-                   <div style={this.props.styles.ConversationContainer}>
+                   <div ref={(c) => this._convo = c} style={this.props.styles.ConversationContainer}>
                  <Grid >
   
                 
