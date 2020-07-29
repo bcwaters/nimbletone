@@ -18,7 +18,7 @@ class App extends Component{
 
         this.state = {
             name: 'React',
-            clientsideSocket: socket(),
+            clientsideSocket: socket(process.env.REACT_APP_HOSTNAME),
             currentMessage: 0,
             messages: [[   {timestamp: '12:00 7-29-20', number: '6504768039', msg:'1st Message', eventType: 'received'}]],
             styles: ThemeProvider.getCss("MainTheme"),

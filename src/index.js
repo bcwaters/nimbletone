@@ -5,6 +5,7 @@ import './components/Notifications.css'
 import {ThemeProvider} from './styles/StyleProvider.js'
 
 
+
 const style = document.createElement('style')
 let css = 'body{background-color:  '+ThemeProvider.getDefaultColor().backgroundColor+'  }'
 style.innerText = css
