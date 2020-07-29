@@ -3,7 +3,7 @@ const io = require('socket.io-client')
 
 export default function (hostname) {
   //TODO this url needs to be set to env variable to deploy on server
-    const socket = io.connect('http://localhost:3000')
+    const socket = io.connect('http://' + hostname)
    
    
     function onTextReceived(componentFunction) {
